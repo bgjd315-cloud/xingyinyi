@@ -1,4 +1,4 @@
-/* 形音義抓寶：沿用滄浪闖關的水墨配色與字型 */
+/* 字靈搜神記（原名形音義抓寶）：沿用滄浪闖關的水墨配色與字型 */
 :root{
   --bg:#EAF0EE; --surface:#F8FAF9; --ink:#1B2725; --muted:#566764; --line:#C6D1CD;
   --river:#2E6C8C; --frost:#DBE5E9;
@@ -189,3 +189,39 @@ u{text-decoration-thickness:2px; text-underline-offset:3px}
   .grounds{grid-template-columns:minmax(0,1fr)}
   .dexstat{grid-template-columns:repeat(2, minmax(0,1fr))}
 }
+
+/* ---------- 主角形象與升級劇情 ---------- */
+.rank{display:flex; align-items:center; gap:10px}
+.avatar{width:44px; height:44px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid var(--gold); background:var(--surface); flex:none}
+.soon{color:var(--r4); font-weight:700}
+.mbody.story{background:linear-gradient(var(--surface), color-mix(in srgb, var(--gold) 8%, var(--surface))); border:2px solid var(--gold); text-align:left}
+.scroll-story .herald{font-family:var(--display); font-weight:900; font-size:1.5rem; color:var(--r4); text-align:center; letter-spacing:.3em; margin:0}
+.hero-stage{position:relative; height:240px; display:flex; justify-content:center; align-items:flex-end; margin:4px 0}
+.hero-stage img{height:100%; object-fit:contain}
+.hero-now{animation:heroIn .9s .35s cubic-bezier(.2,1.3,.4,1) both; filter:drop-shadow(0 6px 12px color-mix(in srgb, var(--gold) 45%, transparent))}
+.hero-prev{position:absolute; animation:heroOut .7s ease-in both; opacity:.5}
+.hero-prev + .hero-now{position:relative}
+@keyframes heroIn{0%{transform:scale(.6) translateY(30px); opacity:0}100%{transform:none; opacity:1}}
+@keyframes heroOut{0%{opacity:.9; transform:none}100%{opacity:0; transform:scale(1.15); filter:blur(6px)}}
+.newrank{text-align:center; margin:0}
+.newrank small{display:block; color:var(--muted)}
+.newrank b{font-family:var(--display); font-size:2.6rem; color:var(--gold); animation:stamp .6s .9s cubic-bezier(.2,1.6,.4,1) both; display:inline-block}
+.ladder{display:flex; flex-wrap:wrap; justify-content:center; gap:4px; list-style:none; padding:0; margin:8px 0 12px; font-size:.8rem}
+.ladder li{padding:.1em .5em; border:1px dashed var(--line); border-radius:8px; color:var(--muted)}
+.ladder li.past{border-style:solid; color:var(--ink)}
+.ladder li.now{border:2px solid var(--r4); color:var(--r4); font-weight:700}
+.scroll-story h3{text-align:center}
+.scroll-story .scene{text-align:center; color:var(--muted); font-size:.9rem; margin:0 0 .5em}
+.lore{border-left:4px solid var(--river); background:var(--frost); padding:.5em .8em; border-radius:6px; margin:.8em 0; font-size:.95rem}
+.lore b{display:block; color:var(--river)}
+.gift{color:var(--gold); font-weight:700; text-align:center}
+.me-hero{display:flex; align-items:flex-end; gap:12px}
+.me-portrait{width:110px; height:140px; object-fit:contain}
+.road{display:grid; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); gap:8px; margin:.5em 0 1em}
+.road button{display:flex; flex-direction:column; align-items:center; padding:.4em; font-family:var(--display); font-weight:700}
+.road button small{font-family:var(--body); font-weight:400; font-size:.72rem; color:var(--muted)}
+.road button.now{border:2px solid var(--r4)}
+.road-img{width:64px; height:80px; object-fit:contain}
+.road-lock{width:64px; height:80px; display:grid; place-items:center; font-size:2rem; color:var(--line)}
+@media (prefers-reduced-motion: reduce){.hero-now,.hero-prev,.newrank b{animation:none}}
+.hero-stage:empty{display:none}

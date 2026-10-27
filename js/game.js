@@ -15,6 +15,64 @@
     [0, "書僮"], [30, "童生"], [100, "秀才"], [250, "舉人"], [500, "貢士"],
     [900, "進士"], [1500, "探花"], [2200, "榜眼"], [3000, "狀元"],
   ];
+  // 主角形象：assets/hero/rank0.webp（書僮）… rank8.webp（狀元），缺圖時自動隱藏
+  const heroImg = (i, cls) => `<img class="${cls}" src="assets/hero/rank${i}.webp" alt="${RANKS[i][1]}的模樣" onerror="this.remove()">`;
+  // 升級劇情：序章＋每個身分一章。gift＝升上這個身分時的賀禮（只發一次）
+  const PROLOGUE = {
+    title: "序章．墨池裂了",
+    scene: "藏書閣深夜",
+    story: [
+      "墨苑藏書閣裡有一方千年墨池，池底封著幾千個字的魂魄：讀音、字形、字義，各安其位。",
+      "今夜一聲裂響，封印崩開。字靈四散奔逃，有的把讀音念歪了，有的把筆畫寫錯了，有的連自己的意思都忘了。",
+      "看守墨池的老塾師墨翁把一支筆交給你：「書僮，去把它們一隻一隻收回來。收得越多，你的學問越深，身分也會一路往上走，直到金榜題名。」",
+    ],
+    note: ["書僮", "「僮」讀作ㄊㄨㄥˊ，古時和「童」通用；書僮就是陪主人讀書、管書房的小僮。"],
+    gift: "墨翁給你三面照妖鏡、一張定身符，先去「字音林」試試身手吧。",
+  };
+  const RANK_STORY = [
+    null,
+    { title: "第一章．縣試過關", scene: "縣衙考棚",
+      story: ["天還沒亮，你提著考籃擠進縣衙考棚。主考的知縣出了一道考題，你一眼就認出題目裡那隻念錯音的字靈，一筆收服。",
+        "放榜那天，你的名字貼在縣衙牆上。從今天起，你不再只是捧書的僮子，而是正式應考的「童生」。"],
+      note: ["應試", "「應」在這裡讀ㄧㄥˋ，是參加、接受的意思，如應試、應考、應聘。"],
+      gift: { coins: 50, mirror: 2 } },
+    { title: "第二章．入泮為生員", scene: "縣學泮池",
+      story: ["學政大人親自主持院試。你把字形山上走樣的字靈一一扶正，答卷工整得像碑帖。",
+        "你戴上方巾、穿上藍衫，走過學宮前的泮池，成了「秀才」。鄉里的人開始稱你一聲「相公」。"],
+      note: ["入泮", "「泮」讀ㄆㄢˋ。古代學宮前有半月形水池叫泮池，考上秀才進入官學，就稱「入泮」。"],
+      gift: { coins: 100, charm: 1 } },
+    { title: "第三章．秋闈中式", scene: "省城貢院",
+      story: ["八月秋闈，貢院裡一排排號舍，你在小小的隔間裡寫了九天。夜裡字義海的浪聲傳來，你把一字多義的字靈一隻隻分清楚。",
+        "桂花開時放榜，你中了「舉人」。報喜的差役敲鑼到家門口，墨翁笑得合不攏嘴。"],
+      note: ["解元", "鄉試又叫「秋闈」，「闈」讀ㄨㄟˊ，指考場。鄉試第一名稱「解元」，「解」讀ㄐㄧㄝˋ。"],
+      gift: { coins: 200, mirror: 3 } },
+    { title: "第四章．春闈會試", scene: "京城貢院",
+      story: ["你帶著書箱進京。三月春闈，各省舉人齊聚一堂，大考神殿裡的朱印神靈也在場中游走。",
+        "你連收數隻，名列會試榜上，成了「貢士」，取得進宮殿試的資格。"],
+      note: ["會元", "會試在春天舉行，又叫「春闈」；會試第一名稱「會元」。「會試」的「會」讀ㄏㄨㄟˋ。"],
+      gift: { coins: 300, mirror: 2, charm: 1 } },
+    { title: "第五章．金殿傳臚", scene: "紫禁城保和殿",
+      story: ["殿試那天，皇帝親自出題。你在金殿上作答，筆下的字靈不敢再亂跑。",
+        "官員高聲唱名，你的名字傳過一重又一重宮門。金榜題名，你成了「進士」。"],
+      note: ["傳臚", "殿試後唱名公布名次叫「傳臚」，「臚」讀ㄌㄨˊ，有陳述、傳告的意思。"],
+      gift: { coins: 500, charm: 2 } },
+    { title: "第六章．瓊林探花", scene: "瓊林宴",
+      story: ["皇上翻看你收服的字靈圖鑑，連連點頭，把你擢升為一甲第三名。",
+        "瓊林宴上，大家笑著把花枝遞給你：「探花郎，請。」"],
+      note: ["三鼎甲", "殿試一甲只有三人：狀元、榜眼、探花，合稱「三鼎甲」，像鼎的三隻腳並立。"],
+      gift: { coins: 600, mirror: 3, charm: 1 } },
+    { title: "第七章．榜眼之位", scene: "翰林院",
+      story: ["你進了翰林院，日日校讀典籍。古書裡藏著更多迷路的字靈，你一一辨明讀音、字形和字義。",
+        "朝廷再評名次，你升為一甲第二名「榜眼」。金榜上，只剩一個名字排在你前面。"],
+      note: ["榜眼", "「榜」讀ㄅㄤˇ，指張貼名單的告示，不要寫成「傍」。"],
+      gift: { coins: 800, mirror: 3, charm: 2 } },
+    { title: "終章．獨占鰲頭", scene: "金鑾殿前",
+      story: ["你收服的字靈已經多到可以重新填滿墨池。封印在你筆下合攏，金光照亮整座藏書閣。",
+        "皇上欽點你為「狀元」。你帽插宮花、身披紅綢，跨馬遊街，滿城爭看。",
+        "墨翁拍拍你的肩：「字靈還會再跑出來，學問也沒有盡頭。往後收服的每一隻，都讓你的熟練度更上一層。」"],
+      note: ["獨占鰲頭", "「鰲」讀ㄠˊ，是傳說中的大海龜。宮殿石階正中刻著鰲頭，狀元站在那裡迎榜，所以說「獨占鰲頭」。"],
+      gift: { coins: 1000, mirror: 5, charm: 3 } },
+  ];
   const GROUNDS = [
     { id: "音", name: "字音林", desc: "讀音辨正：同偏旁、多音字、形近字", test: (q) => q.kind === "字音" },
     { id: "形", name: "字形山", desc: "錯別字、同音字、形近字", test: (q) => q.kind === "字形" },
@@ -40,7 +98,7 @@
   // ---------- 存檔 ----------
   function fresh() {
     return { coins: 0, got: {}, esc: {}, stats: {}, items: { mirror: 3, charm: 1 }, lv: { pot: 0, brush: 0 },
-      runs: 0, bestCombo: 0, seen: {} };
+      runs: 0, bestCombo: 0, seen: {}, rankSeen: 0, intro: false };
   }
   function load() {
     try {
@@ -117,7 +175,67 @@
     for (let i = 0; i < RANKS.length; i++) {
       if (p >= RANKS[i][0]) { r = RANKS[i]; next = RANKS[i + 1] || null; }
     }
-    return { name: r[1], next };
+    return { name: r[1], next, idx: RANKS.indexOf(r) };
+  }
+
+  // ---------- 升級劇情 ----------
+  let rankQueue = [];
+  function giftText(g) {
+    const out = [];
+    if (g.coins) out.push(`銅錢 ${g.coins}`);
+    if (g.mirror) out.push(`照妖鏡 ${g.mirror} 面`);
+    if (g.charm) out.push(`定身符 ${g.charm} 張`);
+    return out.join("、");
+  }
+  function ladderHTML(cur) {
+    return `<ol class="ladder">${RANKS.map((r, i) =>
+      `<li class="${i < cur ? "past" : i === cur ? "now" : ""}">${r[1]}</li>`).join("")}</ol>`;
+  }
+  function storyHTML(st, cur, giftLine, isPrologue) {
+    const before = cur > 0 && !isPrologue ? heroImg(cur - 1, "hero-prev") : "";
+    return `<div class="scroll-story">` +
+      `<p class="herald">${isPrologue ? "墨苑告急" : "捷　報"}</p>` +
+      `<div class="hero-stage">${before}${heroImg(cur, "hero-now")}</div>` +
+      (isPrologue ? "" : `<p class="newrank"><small>恭喜升為</small><b>${RANKS[cur][1]}</b></p>`) +
+      ladderHTML(cur) +
+      `<h3>${st.title}</h3><p class="scene">${st.scene}</p>` +
+      st.story.map((t) => `<p>${t}</p>`).join("") +
+      `<div class="lore"><b>考場小知識．${st.note[0]}</b>${st.note[1]}</div>` +
+      (giftLine ? `<p class="gift">${giftLine}</p>` : "") +
+      `<button class="primary wide" id="m-close">${giftLine && !isPrologue ? "收下賀禮" : "繼續"}</button></div>`;
+  }
+  function openStory(html) {
+    $("#mbody").innerHTML = html;
+    $("#mbody").classList.add("story");
+    $("#modal").classList.remove("hidden");
+    $("#m-close").addEventListener("click", closeModal);
+  }
+  function showPrologue() {
+    S.intro = true;
+    save();
+    openStory(storyHTML(PROLOGUE, 0, PROLOGUE.gift, true));
+  }
+  // 戰力跨過門檻：依序播放每一章，賀禮在播放時入帳（關掉視窗也不會漏領）
+  function checkRankUp() {
+    if (run && !run.done) return;
+    const idx = rankOf(totalPower()).idx;
+    while (S.rankSeen < idx) rankQueue.push(++S.rankSeen);
+    save();
+    if (rankQueue.length && $("#modal").classList.contains("hidden")) nextStory();
+  }
+  function nextStory() {
+    const i = rankQueue.shift();
+    if (i == null) return;
+    const st = RANK_STORY[i];
+    S.coins += st.gift.coins || 0;
+    S.items.mirror += st.gift.mirror || 0;
+    S.items.charm += st.gift.charm || 0;
+    save();
+    refreshTop();
+    openStory(storyHTML(st, i, `墨翁的賀禮：${giftText(st.gift)}`));
+  }
+  function replayStory(i) {
+    openStory(i === 0 ? storyHTML(PROLOGUE, 0, "", true) : storyHTML(RANK_STORY[i], i, ""));
   }
 
   function refreshTop() {
@@ -125,8 +243,10 @@
     $("#coins").textContent = S.coins.toLocaleString();
     $("#power").textContent = p.toLocaleString();
     const r = rankOf(p);
-    $("#rank").innerHTML = `目前身分：<b>${r.name}</b>` +
-      (r.next ? `　再 ${r.next[0] - p} 戰力升為「${r.next[1]}」` : "　已登峰造極");
+    const shown = Math.min(r.idx, S.rankSeen);
+    $("#rank").innerHTML = heroImg(shown, "avatar") + `<span>目前身分：<b>${RANKS[shown][1]}</b>` +
+      (r.idx > S.rankSeen ? `　<span class="soon">出巡結束後放榜！</span>`
+        : r.next ? `　再 ${r.next[0] - p} 戰力升為「${r.next[1]}」` : "　已登峰造極") + `</span>`;
   }
 
   // ---------- 分頁 ----------
@@ -403,6 +523,7 @@
     for (const l of run.log) list.appendChild(miniRow(BY_ID[l.id], l.ok ? "收服" : l.part ? "擦身而過" : "逃走", l.ok));
     $("#sum-escaped").disabled = !Object.keys(S.esc).length;
     show("sum");
+    setTimeout(checkRankUp, 700);
   }
   function streaks(log) {
     let c = 0; const out = [0];
@@ -455,7 +576,11 @@
     $("#modal").classList.remove("hidden");
     $("#m-close").addEventListener("click", closeModal);
   }
-  function closeModal() { $("#modal").classList.add("hidden"); }
+  function closeModal() {
+    $("#modal").classList.add("hidden");
+    $("#mbody").classList.remove("story");
+    if (rankQueue.length) setTimeout(nextStory, 250);
+  }
   $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
@@ -540,6 +665,7 @@
         toast(`買到了：${it.name}`);
         renderShop();
         refreshTop();
+        checkRankUp();
       });
       d.appendChild(b);
       box.appendChild(d);
@@ -557,11 +683,16 @@
     }).join("");
     const done = badges().filter((b) => b.done).length;
     $("#me-card").innerHTML =
-      `<h2>${r.name}</h2>` +
+      `<div class="me-hero">${heroImg(S.rankSeen, "me-portrait")}<h2>${RANKS[S.rankSeen][1]}</h2></div>` +
       `<p>戰力 <b>${p}</b>　銅錢 <b>${S.coins}</b>　出巡 <b>${S.runs}</b> 次　最高連收 <b>${S.bestCombo}</b></p>` +
       `<p>圖鑑 <b>${nGot}</b>／${BANK.length} 隻　逃走名單 <b>${nEsc}</b> 隻　集滿卷別印記 <b>${done}</b> 份</p>` +
       `<h3>各類答對率（第一次作答與重抓都算）</h3><div class="bars">${bars}</div>` +
+      `<h3>身分之路</h3><p class="muted small">點已解鎖的身分，可以重看那一章和當時的模樣。</p>` +
+      `<div class="road">${RANKS.map((x, i) => i <= S.rankSeen
+        ? `<button data-st="${i}" class="${i === S.rankSeen ? "now" : ""}">${heroImg(i, "road-img")}${x[1]}<small>${i ? RANK_STORY[i].title.split("．")[1] : "序章"}</small></button>`
+        : `<button disabled><span class="road-lock">?</span>${x[1]}<small>戰力 ${x[0]}</small></button>`).join("")}</div>` +
       `<p class="muted small">戰力＝已收服字靈（墨靈 1、玉靈 3、金靈 6、朱印神靈 12，熟練度每多一顆星加五成）＋每份集滿的卷別印記 20，再乘上文房四寶加成。</p>`;
+    for (const b of document.querySelectorAll("#me-card [data-st]")) b.addEventListener("click", () => replayStory(+b.dataset.st));
   }
   $("#save-copy").addEventListener("click", async () => {
     const code = btoa(unescape(encodeURIComponent(JSON.stringify(S))));
@@ -612,7 +743,9 @@
         : `題庫共 ${BANK.length} 題：學測／指考 ${c.大考 || 0} 題、大考改編題 ${c.模考 || 0} 題、` +
         `翰林與龍騰語練改編題 ${c.語練 || 0} 題、語練改編小題 ${c.小題 || 0} 題。` +
         `改編小題由語練的字音字形填寫題改成四選一，干擾選項由程式產生。`;
+      if (!S.intro && S.runs > 0) { S.intro = true; S.rankSeen = rankOf(totalPower()).idx; save(); }
       show("hunt");
+      if (!S.intro) showPrologue();
     })
     .catch(() => { document.querySelector("main").innerHTML = '<div class="card">題庫載入失敗，請重新整理。</div>'; });
 })();
