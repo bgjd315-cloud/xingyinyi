@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>形音義抓寶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+<header class="top">
+  <h1>形音義抓寶</h1>
+  <div class="purse">
+    <span title="銅錢"><i class="coin"></i><b id="coins">0</b></span>
+    <span title="戰力">戰力 <b id="power">0</b></span>
+  </div>
+</header>
+<p class="rank" id="rank"></p>
+
+<nav class="tabs" role="tablist">
+  <button data-tab="hunt" class="cur">出巡</button>
+  <button data-tab="dex">字靈圖鑑</button>
+  <button data-tab="shop">墨寶鋪</button>
+  <button data-tab="me">戰績</button>
+</nav>
+
+<main>
+  <!-- 出巡：選獵場 -->
+  <section id="v-hunt" class="view">
+    <img class="hero" src="assets/hero.webp" alt="" onerror="this.remove()">
+    <div class="card intro">
+      <p>每次出巡會遇到 <b>10 隻字靈</b>。答對就收服，賺銅錢、加戰力；答錯牠就逃走，記進「逃走名單」，之後可以回頭追捕。</p>
+      <div class="legend" id="legend"></div>
+    </div>
+    <h2 class="sec">選獵場</h2>
+    <div class="grounds" id="grounds"></div>
+    <div class="card filters">
+      <label>出題來源
+        <select id="f-tier"></select>
+      </label>
+      <label class="chk"><input type="checkbox" id="f-new" checked> 優先遇見還沒收服的字靈</label>
+    </div>
+  </section>
+
+  <!-- 遭遇 -->
+  <section id="v-enc" class="view hidden">
+    <div class="encbar">
+      <span id="enc-count"></span>
+      <span id="enc-combo" class="combo"></span>
+      <button id="enc-quit" class="ghost">結束出巡</button>
+    </div>
+    <div class="spirit-stage" id="stage">
+      <div class="ring"></div>
+      <div class="spirit-box"><img class="spirit-img hidden" id="sp-img" alt="" onerror="this.classList.add('hidden')"></div>
+      <div class="glyph" id="glyph"></div>
+      <div class="seal" id="seal">收</div>
+      <div class="spirit-meta">
+        <span id="sp-rarity" class="r"></span>
+        <span id="sp-kind" class="kindtag"></span>
+      </div>
+    </div>
+    <div class="card qcard">
+      <div class="qhead"><span class="src" id="q-src"></span><span id="q-multi" class="tag multi hidden">多選</span></div>
+      <div class="stem" id="q-stem"></div>
+      <div class="opts" id="q-opts"></div>
+      <div class="tools" id="q-tools">
+        <button id="use-mirror" title="照妖鏡：去掉一個錯誤選項">照妖鏡 ×<b id="n-mirror">0</b></button>
+        <button id="use-charm" title="定身符：答錯時字靈不會逃走，可再答一次">定身符 ×<b id="n-charm">0</b></button>
+        <button id="q-submit" class="primary hidden">送出</button>
+      </div>
+      <div id="q-result" class="hidden">
+        <p class="verdict" id="q-verdict"></p>
+        <div class="exp" id="q-exp"></div>
+        <button id="q-next" class="primary wide">下一隻</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 結算 -->
+  <section id="v-sum" class="view hidden">
+    <div class="card center">
+      <h2>出巡結束</h2>
+      <p class="big" id="sum-line"></p>
+      <div class="sumgrid" id="sum-grid"></div>
+      <div id="sum-badges"></div>
+      <div class="row">
+        <button class="primary wide" id="sum-again">再出巡一次</button>
+        <button class="wide" id="sum-escaped">追捕逃走的字靈</button>
+      </div>
+    </div>
+    <div id="sum-list" class="review"></div>
+  </section>
+
+  <!-- 圖鑑 -->
+  <section id="v-dex" class="view hidden">
+    <div class="card">
+      <div class="dexstat" id="dex-stat"></div>
+      <div class="row wrap">
+        <select id="d-kind"><option value="">全部形音義</option><option>字音</option><option>字形</option><option>字義</option></select>
+        <select id="d-tier"></select>
+        <select id="d-show"><option value="all">全部</option><option value="got">已收服</option><option value="esc">逃走名單</option></select>
+      </div>
+    </div>
+    <p class="muted small">集滿同一份卷的形音義題，就得到該卷印記（戰力 +20）。</p>
+    <div class="badges" id="badges"></div>
+    <div class="dex" id="dex"></div>
+  </section>
+
+  <!-- 商店 -->
+  <section id="v-shop" class="view hidden">
+    <div class="card"><p>用銅錢換道具或升級。道具在答題時使用。</p></div>
+    <div class="shop" id="shop"></div>
+  </section>
+
+  <!-- 戰績 -->
+  <section id="v-me" class="view hidden">
+    <div class="card" id="me-card"></div>
+    <div class="card">
+      <h3>存檔</h3>
+      <p class="muted">進度存在這支手機的瀏覽器裡。換手機或清除瀏覽資料前，先複製存檔碼。</p>
+      <div class="row wrap">
+        <button id="save-copy">複製存檔碼</button>
+        <button id="save-load">貼上存檔碼還原</button>
+        <button id="save-reset" class="danger">全部重來</button>
+      </div>
+    </div>
+    <div class="card muted small" id="credits"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<div class="modal hidden" id="modal"><div class="card mbody" id="mbody"></div></div>
+<script src="js/game.js?v=2"></script>
+</body>
+</html>
