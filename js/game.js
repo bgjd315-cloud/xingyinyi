@@ -370,7 +370,7 @@
     const keys = c.order.map((oi, k) => (ans.has(oi) ? "ABCDE"[k] : "")).join("");
     $("#q-verdict").className = "verdict " + cls;
     $("#q-verdict").textContent = verdict + (gain ? `　+${gain} 銅錢` : "");
-    $("#q-exp").innerHTML = `<b>正解：${keys}</b>　${fmt(q.explanation || "（本題沒有附解析）")}`;
+    $("#q-exp").innerHTML = `<b>正解：${keys}</b>　${fmt(remapExp(q.explanation, c.order) || "（本題沒有附解析）")}`;
     $("#q-result").classList.remove("hidden");
     $("#q-tools").classList.add("hidden");
     $("#enc-combo").textContent = run.combo >= 2 ? `連收 ${run.combo}（銅錢 ×${comboMult(run.combo)}）` : "";
@@ -422,6 +422,23 @@
       `<span class="s muted">${esc(q.stem.replace(/<\/?u>/g, ""))}</span></span>`;
     d.addEventListener("click", () => openQ(q));
     return d;
+  }
+
+  // 選項出題時打亂了順序，解析裡的 (A)(B)… 要換成畫面上的字母，並依新順序重排
+  function remapExp(exp, order) {
+    if (!exp) return exp;
+    const parts = exp.split(/(?=\([A-E]\))/);
+    const head = /^\([A-E]\)/.test(parts[0]) ? "" : parts.shift();
+    if (!parts.length) return exp;
+    const segs = [];
+    for (const p of parts) {
+      const oi = "ABCDE".indexOf(p[1]);
+      const ni = order.indexOf(oi);
+      if (oi < 0 || ni < 0) return exp;   // 對不上就保留原文，不冒險改
+      segs.push([ni, "(" + "ABCDE"[ni] + ")" + p.slice(3)]);
+    }
+    segs.sort((x, y) => x[0] - y[0]);
+    return head + segs.map((x) => x[1].replace(/\s+$/, "")).join(" ");
   }
 
   // ---------- 題目檢視 ----------
