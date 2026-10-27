@@ -225,3 +225,4 @@ u{text-decoration-thickness:2px; text-underline-offset:3px}
 .road-lock{width:64px; height:80px; display:grid; place-items:center; font-size:2rem; color:var(--line)}
 @media (prefers-reduced-motion: reduce){.hero-now,.hero-prev,.newrank b{animation:none}}
 .hero-stage:empty{display:none}
+.mbody.story{overflow-x:hidden}
