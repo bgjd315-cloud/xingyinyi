@@ -242,3 +242,18 @@ u{text-decoration-thickness:2px; text-underline-offset:3px}
 .chap small{color:var(--muted)}
 .chap-img{width:48px; height:64px; object-fit:contain; flex:none}
 .chap .road-lock{width:48px; height:64px; font-size:1.5rem}
+
+/* 墨寶鋪道具圖 */
+.item .item-img{width:72px; height:72px; object-fit:contain; flex:none}
+.item .item-txt{flex:1; min-width:0}
+.item{grid-template-columns:auto minmax(0,1fr) auto}
+.item p{grid-column:auto}
+.item button{grid-row:auto; grid-column:auto}
+.item{grid-template-columns:60px minmax(0,1fr); gap:6px 12px}
+.item .item-img{width:60px; height:60px; grid-row:1 / span 2}
+.item button{grid-column:2; justify-self:start}
+@media (min-width:520px){
+  .item{grid-template-columns:72px minmax(0,1fr) auto}
+  .item .item-img{width:72px; height:72px; grid-row:auto}
+  .item button{grid-column:3}
+}

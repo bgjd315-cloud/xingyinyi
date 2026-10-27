@@ -663,7 +663,9 @@
       const maxed = it.up && lv >= it.max;
       const cost = costOf(it);
       const own = it.give ? `（持有 ${S.items[Object.keys(it.give)[0]]}）` : `（目前 ${lv} 級）`;
-      d.innerHTML = `<h3>${it.name}</h3><p>${it.desc}${own}</p>`;
+      const pic = { mirror: "照妖鏡", charm: "定身符", pot: "聚寶盆", brush: "文房四寶" }[it.id.replace(/\d+$/, "")];
+      d.innerHTML = `<img class="item-img" src="assets/shop/${pic}.webp" alt="" onerror="this.remove()">` +
+        `<div class="item-txt"><h3>${it.name}</h3><p>${it.desc}${own}</p></div>`;
       const b = document.createElement("button");
       b.className = "primary";
       b.innerHTML = maxed ? "已滿級" : `<i class="coin"></i>${cost}`;
