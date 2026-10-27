@@ -6,8 +6,8 @@
   const RUN_LEN = 10;
 
   let TIERS = {
-    小題: { cls: "r1", name: "墨靈", label: "墨靈・語練改編", coin: 10, power: 1, weight: 55 },
-    語練: { cls: "r2", name: "玉靈", label: "玉靈・語練原題", coin: 30, power: 3, weight: 22 },
+    小題: { cls: "r1", name: "墨靈", label: "墨靈・語練改編小題", coin: 10, power: 1, weight: 55 },
+    語練: { cls: "r2", name: "玉靈", label: "玉靈・語練改編題", coin: 30, power: 3, weight: 22 },
     模考: { cls: "r3", name: "金靈", label: "金靈・模擬考", coin: 60, power: 6, weight: 14 },
     大考: { cls: "r4", name: "朱印神靈", label: "朱印神靈・學測指考", coin: 120, power: 12, weight: 9 },
   };
@@ -230,7 +230,7 @@
     $("#sp-kind").textContent = q.kind;
     $("#enc-count").textContent = `第 ${run.i + 1}／${run.qs.length} 隻`;
     $("#enc-combo").textContent = run.combo >= 2 ? `連收 ${run.combo}` : "";
-    $("#q-src").textContent = q.source + (q.adapted ? "（改編小題）" : "");
+    $("#q-src").textContent = q.source + (q.adapted ? "（改編小題）" : q.tier === "語練" ? "（改編）" : "");
     $("#q-multi").classList.toggle("hidden", q.type !== "multi");
     $("#q-stem").innerHTML = fmt(q.stem);
     $("#q-result").classList.add("hidden");
@@ -430,7 +430,7 @@
     const stars = S.got[q.id] ? "★".repeat(S.got[q.id]) : "";
     $("#mbody").innerHTML =
       `<div class="qhead"><span class="r ${TIERS[q.tier].cls}">${TIERS[q.tier].name}</span><span class="kindtag">${q.kind}</span>` +
-      `<span class="src">${esc(q.source)}${q.adapted ? "（改編小題）" : ""}</span><span style="color:var(--gold)">${stars}</span></div>` +
+      `<span class="src">${esc(q.source)}${q.adapted ? "（改編小題）" : q.tier === "語練" ? "（改編）" : ""}</span><span style="color:var(--gold)">${stars}</span></div>` +
       `<div class="stem">${fmt(q.stem)}</div>` +
       `<div class="opts">${q.options.map((o, i) => `<div class="opt ${q.answer.includes(i) ? "right" : ""}"><span class="k">${"ABCDE"[i]}</span><span>${fmt(o)}</span></div>`).join("")}</div>` +
       `<div class="exp"><b>正解：${keys}</b>　${fmt(q.explanation || "（本題沒有附解析）")}</div>` +
@@ -593,7 +593,7 @@
         ? `題庫共 ${BANK.length} 題：大考題 ${BANK.filter(EXAM).length} 題取自大學入學考試中心公布之 107–115 學測、107–110 指考試題；` +
           `其餘為本站把形音義知識點重新組合出的新題。解析皆為本站自行撰寫或由程式依知識點產生。`
         : `題庫共 ${BANK.length} 題：學測／指考／分科 ${c.大考 || 0} 題、模擬考 ${c.模考 || 0} 題、` +
-        `翰林與龍騰語練原題 ${c.語練 || 0} 題、語練改編小題 ${c.小題 || 0} 題。` +
+        `翰林與龍騰語練改編題 ${c.語練 || 0} 題、語練改編小題 ${c.小題 || 0} 題。` +
         `改編小題由語練的字音字形填寫題改成四選一，干擾選項由程式產生。`;
       show("hunt");
     })
