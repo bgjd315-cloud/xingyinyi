@@ -705,7 +705,7 @@
       `<p>你是墨苑的小書僮。收服字靈、累積戰力，就能一路從<b>書僮</b>考到<b>狀元</b>，把墨池重新封好。</p></div></div>` +
       `<h2 class="sec">人物</h2><div class="cast">` +
       `<div class="cast-card">${heroImg(cur, "")}<div><b>你（${RANKS[cur][1]}）</b><p>墨苑的小書僮。每升一級，衣冠就換一次，最後帽插宮花、跨馬遊街。</p></div></div>` +
-      CAST.map(([n, d]) => `<div class="cast-card"><span class="cast-ink">${n[0]}</span><div><b>${n}</b><p>${d}</p></div></div>`).join("") +
+      CAST.map(([n, d]) => `<div class="cast-card"><img src="assets/cast/${n}.webp" alt="${n}" onerror="this.outerHTML='<span class=cast-ink>${n[0]}</span>'"><div><b>${n}</b><p>${d}</p></div></div>`).join("") +
       `</div><h2 class="sec">四種字靈</h2><div class="cast">${spirits}</div>` +
       `<h2 class="sec">章節</h2><p class="muted small">戰力到了就會解鎖下一章；點已解鎖的章節可以重看。</p>` +
       `<div class="chaps">${chapters}</div>`;

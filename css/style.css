@@ -257,3 +257,4 @@ u{text-decoration-thickness:2px; text-underline-offset:3px}
   .item .item-img{width:72px; height:72px; grid-row:auto}
   .item button{grid-column:3}
 }
+.cast-card img{width:64px; height:84px}
