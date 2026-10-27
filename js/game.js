@@ -19,7 +19,7 @@
     { id: "音", name: "字音林", desc: "讀音辨正：同偏旁、多音字、形近字", test: (q) => q.kind === "字音" },
     { id: "形", name: "字形山", desc: "錯別字、同音字、形近字", test: (q) => q.kind === "字形" },
     { id: "義", name: "字義海", desc: "一字多義、古今異義", test: (q) => q.kind === "字義" },
-    { id: "殿", name: "大考神殿", full: true, desc: "只出學測、指考、分科與模擬考原題", test: (q) => q.tier === "大考" || q.tier === "模考" },
+    { id: "殿", name: "大考神殿", desc: "只出學測、指考與模擬考原題", test: (q) => EXAM(q) },
     { id: "亂", name: "百字亂流", desc: "形音義全部混在一起", test: () => true },
     { id: "逃", name: "追捕逃靈", desc: "回頭抓之前答錯逃走的字靈", test: (q) => !!S.esc[q.id] },
   ];
@@ -33,7 +33,7 @@
   ];
 
   let BANK = [], BY_ID = {}, EDITION = "full";
-  const EXAM = (q) => !["語練", "小題"].includes(q.srcType);
+  const EXAM = (q) => !["語練", "小題", "重組"].includes(q.srcType);
   let S = load();
   let run = null;
 
@@ -160,7 +160,6 @@
     const box = $("#grounds");
     box.innerHTML = "";
     for (const g of GROUNDS) {
-      if (g.full && EDITION === "public") continue;
       const pool = poolFor(g);
       const got = pool.filter((q) => S.got[q.id]).length;
       const b = document.createElement("button");
@@ -168,7 +167,7 @@
       b.style.backgroundImage = "linear-gradient(90deg, color-mix(in srgb, var(--surface) 92%, transparent) 30%, " +
         `color-mix(in srgb, var(--surface) 35%, transparent)), url("assets/grounds/${GIMG[g.id]}.webp")`;
       b.disabled = pool.length === 0;
-      b.innerHTML = `<span class="gname">${g.name}</span><span class="gdesc">${g.desc}</span>` +
+      b.innerHTML = `<span class="gname">${g.name}</span><span class="gdesc">${g.id === "殿" && EDITION === "public" ? "只出歷屆學測、指考原題" : g.desc}</span>` +
         `<span class="gnum">${g.id === "逃" ? `逃走中 ${pool.length} 隻` : `已收服 ${got}／${pool.length}`}</span>`;
       b.addEventListener("click", () => startRun(g));
       box.appendChild(b);
@@ -577,7 +576,6 @@
     $("#f-tier").innerHTML = `<option value="all">全部（依稀有度隨機出現）</option>` +
       ts.slice().reverse().map(([k, t]) => `<option value="${k}">只抓${t.label}</option>`).join("");
     $("#d-tier").innerHTML = ts.slice().reverse().map(([k, t]) => `<option value="${k}">${t.label}</option>`).join("");
-    if (EDITION === "public") document.title = "形音義抓寶・大考版";
   }
 
   // ---------- 啟動 ----------
@@ -592,10 +590,11 @@
       const c = {};
       for (const q of BANK) c[q.tier] = (c[q.tier] || 0) + 1;
       $("#credits").innerHTML = EDITION === "public"
-        ? `題庫共 ${BANK.length} 題，取自大學入學考試中心公布之 107–115 學測、107–110 指考試題；解析為本站自行撰寫。`
+        ? `題庫共 ${BANK.length} 題：大考題 ${BANK.filter(EXAM).length} 題取自大學入學考試中心公布之 107–115 學測、107–110 指考試題；` +
+          `其餘為本站把形音義知識點重新組合出的新題。解析皆為本站自行撰寫或由程式依知識點產生。`
         : `題庫共 ${BANK.length} 題：學測／指考／分科 ${c.大考 || 0} 題、模擬考 ${c.模考 || 0} 題、` +
         `翰林與龍騰語練原題 ${c.語練 || 0} 題、語練改編小題 ${c.小題 || 0} 題。` +
-        `題目取自大學入學考試中心公布之歷屆試題；解析為本站自行撰寫。`;
+        `改編小題由語練的字音字形填寫題改成四選一，干擾選項由程式產生。`;
       show("hunt");
     })
     .catch(() => { document.querySelector("main").innerHTML = '<div class="card">題庫載入失敗，請重新整理。</div>'; });
