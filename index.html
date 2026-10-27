@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=9">
+<link rel="stylesheet" href="css/style.css?v=11">
 </head>
 <body>
 <header class="top">
@@ -23,6 +23,7 @@
   <button data-tab="hunt" class="cur">出巡</button>
   <button data-tab="dex">字靈圖鑑</button>
   <button data-tab="shop">墨寶鋪</button>
+  <button data-tab="story">故事</button>
   <button data-tab="me">戰績</button>
 </nav>
 
@@ -115,6 +116,10 @@
   </section>
 
   <!-- 戰績 -->
+  <section id="v-story" class="view hidden">
+    <div id="story-body"></div>
+  </section>
+
   <section id="v-me" class="view hidden">
     <div class="card" id="me-card"></div>
     <div class="card">
@@ -132,6 +137,6 @@
 
 <div class="toast" id="toast"></div>
 <div class="modal hidden" id="modal"><div class="card mbody" id="mbody"></div></div>
-<script src="js/game.js?v=9"></script>
+<script src="js/game.js?v=11"></script>
 </body>
 </html>

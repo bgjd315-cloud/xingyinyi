@@ -17,62 +17,72 @@
   ];
   // 主角形象：assets/hero/rank0.webp（書僮）… rank8.webp（狀元），缺圖時自動隱藏
   const heroImg = (i, cls) => `<img class="${cls}" src="assets/hero/rank${i}.webp" alt="${RANKS[i][1]}的模樣" onerror="this.remove()">`;
-  // 升級劇情：序章＋每個身分一章。gift＝升上這個身分時的賀禮（只發一次）
+  // 升級劇情：序章＋每個身分一章。go＝這一章帶玩家去的獵場；gift＝升上這個身分時的賀禮（只發一次）
   const PROLOGUE = {
-    title: "序章．墨池裂了",
-    scene: "藏書閣深夜",
+    title: "序章．墨池裂了", scene: "墨苑藏書閣・深夜", go: "音",
     story: [
-      "墨苑藏書閣裡有一方千年墨池，池底封著幾千個字的魂魄：讀音、字形、字義，各安其位。",
-      "今夜一聲裂響，封印崩開。字靈四散奔逃，有的把讀音念歪了，有的把筆畫寫錯了，有的連自己的意思都忘了。",
-      "看守墨池的老塾師墨翁把一支筆交給你：「書僮，去把它們一隻一隻收回來。收得越多，你的學問越深，身分也會一路往上走，直到金榜題名。」",
+      "墨苑藏書閣裡有一方千年墨池，池底沉睡著幾千隻字靈。每個字的讀音、字形、字義，都在那裡安安穩穩。",
+      "一個沒有月亮的夜晚，「白字老妖」潛進藏書閣。牠專吃念錯的音、寫錯的字、弄混的意思，吃得越多長得越大。牠一爪劃破封印，字靈驚慌四散，躲進了林中、山上、海裡和神殿。",
+      "守池的老塾師墨翁把一支筆交給你：「書僮，字靈不是壞東西，只是迷了路。答對牠們的題目，就能把牠們收回來。收得越多，你的學問越深，身分也會一路往上走。」",
     ],
-    note: ["書僮", "「僮」讀作ㄊㄨㄥˊ，古時和「童」通用；書僮就是陪主人讀書、管書房的小僮。"],
-    gift: "墨翁給你三面照妖鏡、一張定身符，先去「字音林」試試身手吧。",
+    note: ["白字", "寫錯或念錯的字叫「白字」。例如「破綻」的「綻」讀ㄓㄢˋ，念成ㄉㄧㄥˋ就是白字。"],
+    gift: "墨翁給你三面照妖鏡、一張定身符。第一站：字音林。",
   };
   const RANK_STORY = [
     null,
-    { title: "第一章．縣試過關", scene: "縣衙考棚",
-      story: ["天還沒亮，你提著考籃擠進縣衙考棚。主考的知縣出了一道考題，你一眼就認出題目裡那隻念錯音的字靈，一筆收服。",
-        "放榜那天，你的名字貼在縣衙牆上。從今天起，你不再只是捧書的僮子，而是正式應考的「童生」。"],
+    { title: "第一章．縣試過關", scene: "縣試・字音林", go: "形",
+      story: ["墨翁帶你走進字音林。林裡的字靈被白字老妖念歪了音：多音字分不清該念哪一個，同偏旁的字被帶著跑。",
+        "你一隻隻辨清讀音，縣試、府試接連過關。從今天起，你不再只是捧書的僮子，而是正式應考的「童生」。",
+        "墨翁提醒你：「白字老妖最愛『有邊讀邊』。看到熟悉的偏旁，先別急著念。」"],
       note: ["應試", "「應」在這裡讀ㄧㄥˋ，是參加、接受的意思，如應試、應考、應聘。"],
       gift: { coins: 50, mirror: 2 } },
-    { title: "第二章．入泮為生員", scene: "縣學泮池",
-      story: ["學政大人親自主持院試。你把字形山上走樣的字靈一一扶正，答卷工整得像碑帖。",
-        "你戴上方巾、穿上藍衫，走過學宮前的泮池，成了「秀才」。鄉里的人開始稱你一聲「相公」。"],
+    { title: "第二章．入泮為生員", scene: "院試・字形山", go: "義",
+      story: ["字形山上，白字老妖把字靈的筆畫揉亂了：形近字擠成一團，同音字互相冒名頂替。",
+        "你把它們一一扶正，院試答卷工整得像碑帖。你戴上方巾、穿上藍衫，走過學宮前的泮池，成了「秀才」。"],
       note: ["入泮", "「泮」讀ㄆㄢˋ。古代學宮前有半月形水池叫泮池，考上秀才進入官學，就稱「入泮」。"],
       gift: { coins: 100, charm: 1 } },
-    { title: "第三章．秋闈中式", scene: "省城貢院",
-      story: ["八月秋闈，貢院裡一排排號舍，你在小小的隔間裡寫了九天。夜裡字義海的浪聲傳來，你把一字多義的字靈一隻隻分清楚。",
-        "桂花開時放榜，你中了「舉人」。報喜的差役敲鑼到家門口，墨翁笑得合不攏嘴。"],
+    { title: "第三章．秋闈中式", scene: "鄉試・字義海", go: "殿",
+      story: ["八月秋闈，你在貢院小小的號舍裡寫了九天。夜裡傳來字義海的浪聲：同一個字放進不同句子，意思就跟著變，白字老妖趁機把它們攪混。",
+        "你分清了一字多義、古今異義。桂花開時放榜，你中了「舉人」，報喜的差役敲鑼到家門口。"],
       note: ["解元", "鄉試又叫「秋闈」，「闈」讀ㄨㄟˊ，指考場。鄉試第一名稱「解元」，「解」讀ㄐㄧㄝˋ。"],
       gift: { coins: 200, mirror: 3 } },
-    { title: "第四章．春闈會試", scene: "京城貢院",
-      story: ["你帶著書箱進京。三月春闈，各省舉人齊聚一堂，大考神殿裡的朱印神靈也在場中游走。",
-        "你連收數隻，名列會試榜上，成了「貢士」，取得進宮殿試的資格。"],
+    { title: "第四章．春闈會試", scene: "會試・大考神殿", go: "亂",
+      story: ["你帶著書箱進京。京城的大考神殿裡，歷屆學測、指考的考題化成了金靈與朱印神靈，連白字老妖都不敢靠近。",
+        "你在神殿裡收服了真正的考題，會試榜上有名，成了「貢士」，取得進宮殿試的資格。"],
       note: ["會元", "會試在春天舉行，又叫「春闈」；會試第一名稱「會元」。「會試」的「會」讀ㄏㄨㄟˋ。"],
       gift: { coins: 300, mirror: 2, charm: 1 } },
-    { title: "第五章．金殿傳臚", scene: "紫禁城保和殿",
-      story: ["殿試那天，皇帝親自出題。你在金殿上作答，筆下的字靈不敢再亂跑。",
-        "官員高聲唱名，你的名字傳過一重又一重宮門。金榜題名，你成了「進士」。"],
+    { title: "第五章．金殿傳臚", scene: "殿試・百字亂流", go: "逃",
+      story: ["殿試前夜，白字老妖終於現身。牠把字音、字形、字義全攪在一起，掀起百字亂流，想讓你在金殿上出錯。",
+        "你沉住氣，一題一題拆開來看。隔天唱名的聲音傳過一重又一重宮門：金榜題名，你成了「進士」。"],
       note: ["傳臚", "殿試後唱名公布名次叫「傳臚」，「臚」讀ㄌㄨˊ，有陳述、傳告的意思。"],
       gift: { coins: 500, charm: 2 } },
-    { title: "第六章．瓊林探花", scene: "瓊林宴",
-      story: ["皇上翻看你收服的字靈圖鑑，連連點頭，把你擢升為一甲第三名。",
-        "瓊林宴上，大家笑著把花枝遞給你：「探花郎，請。」"],
+    { title: "第六章．瓊林探花", scene: "瓊林宴・追捕逃靈", go: "逃",
+      story: ["瓊林宴上，你發現白字老妖並沒有消失。牠躲進了你曾經答錯、讓牠逃走的那些字靈裡。",
+        "墨翁說：「答錯過的題，就是牠的藏身處。」你回頭追捕逃靈，把舊錯一筆一筆改正。皇上欣賞你的用心，擢升你為一甲第三名「探花」。"],
       note: ["三鼎甲", "殿試一甲只有三人：狀元、榜眼、探花，合稱「三鼎甲」，像鼎的三隻腳並立。"],
       gift: { coins: 600, mirror: 3, charm: 1 } },
-    { title: "第七章．榜眼之位", scene: "翰林院",
-      story: ["你進了翰林院，日日校讀典籍。古書裡藏著更多迷路的字靈，你一一辨明讀音、字形和字義。",
-        "朝廷再評名次，你升為一甲第二名「榜眼」。金榜上，只剩一個名字排在你前面。"],
+    { title: "第七章．翰林榜眼", scene: "翰林院", go: "亂",
+      story: ["你在翰林院校讀古籍，終於查出白字老妖的來歷：牠不是外來的妖怪，而是每一次「差不多就好」「大概這樣念吧」累積出來的影子。",
+        "想讓牠消失，只能把熟悉的字再抓一次、再確認一次，讓熟練度一顆星一顆星亮起來。你升為一甲第二名「榜眼」。"],
       note: ["榜眼", "「榜」讀ㄅㄤˇ，指張貼名單的告示，不要寫成「傍」。"],
       gift: { coins: 800, mirror: 3, charm: 2 } },
-    { title: "終章．獨占鰲頭", scene: "金鑾殿前",
-      story: ["你收服的字靈已經多到可以重新填滿墨池。封印在你筆下合攏，金光照亮整座藏書閣。",
-        "皇上欽點你為「狀元」。你帽插宮花、身披紅綢，跨馬遊街，滿城爭看。",
-        "墨翁拍拍你的肩：「字靈還會再跑出來，學問也沒有盡頭。往後收服的每一隻，都讓你的熟練度更上一層。」"],
+    { title: "終章．獨占鰲頭", scene: "金鑾殿前・墨池", go: "亂",
+      story: ["你收服的字靈已經多到可以重新填滿墨池。你提筆一點，封印合攏，白字老妖縮成一滴小小的墨點，落進池裡，變成一隻怯生生的墨靈。",
+        "墨翁笑著說：「錯誤收好了，也能變成學問。」皇上欽點你為「狀元」，你帽插宮花、身披紅綢，跨馬遊街。",
+        "字海無邊，新的字靈還會出現。往後每多收一隻、多亮一顆星，都是你自己的功名。"],
       note: ["獨占鰲頭", "「鰲」讀ㄠˊ，是傳說中的大海龜。宮殿石階正中刻著鰲頭，狀元站在那裡迎榜，所以說「獨占鰲頭」。"],
       gift: { coins: 1000, mirror: 5, charm: 3 } },
   ];
+  const CAST = [
+    ["墨翁", "看守墨池的老塾師。說話慢，卻從不念錯一個字。每次你升級，他都會送上賀禮。"],
+    ["白字老妖", "吃錯字長大的影子妖怪，專門把讀音念歪、筆畫寫錯、意思弄混。你越粗心，牠越強大。"],
+  ];
+  const SPIRIT_DESC = {
+    r1: "最常見的字靈，一題一個形音義知識點。",
+    r2: "成對出現：判斷兩個詞裡的字，讀音、字形或字義是否相同。",
+    r3: "歷屆學測、指考的單選原題化成的字靈。",
+    r4: "歷屆學測、指考的多選原題化成的神靈，最難收服。",
+  };
   const GROUNDS = [
     { id: "音", name: "字音林", desc: "讀音辨正：同偏旁、多音字、形近字", test: (q) => q.kind === "字音" },
     { id: "形", name: "字形山", desc: "錯別字、同音字、形近字", test: (q) => q.kind === "字形" },
@@ -201,6 +211,7 @@
       `<h3>${st.title}</h3><p class="scene">${st.scene}</p>` +
       st.story.map((t) => `<p>${t}</p>`).join("") +
       `<div class="lore"><b>考場小知識．${st.note[0]}</b>${st.note[1]}</div>` +
+      (st.go ? `<p class="goto">下一站：${GROUNDS.find((g) => g.id === st.go).name}</p>` : "") +
       (giftLine ? `<p class="gift">${giftLine}</p>` : "") +
       `<button class="primary wide" id="m-close">${giftLine && !isPrologue ? "收下賀禮" : "繼續"}</button></div>`;
   }
@@ -253,12 +264,13 @@
   function show(tab) {
     for (const b of document.querySelectorAll(".tabs button")) b.classList.toggle("cur", b.dataset.tab === tab);
     for (const v of document.querySelectorAll(".view")) v.classList.add("hidden");
-    const map = { hunt: "#v-hunt", dex: "#v-dex", shop: "#v-shop", me: "#v-me", enc: "#v-enc", sum: "#v-sum" };
+    const map = { hunt: "#v-hunt", dex: "#v-dex", shop: "#v-shop", story: "#v-story", me: "#v-me", enc: "#v-enc", sum: "#v-sum" };
     $(map[tab]).classList.remove("hidden");
     if (tab === "hunt") renderGrounds();
     if (tab === "dex") renderDex();
     if (tab === "shop") renderShop();
     if (tab === "me") renderMe();
+    if (tab === "story") renderStory();
     refreshTop();
     window.scrollTo({ top: 0 });
   }
@@ -670,6 +682,32 @@
       d.appendChild(b);
       box.appendChild(d);
     }
+  }
+
+  // ---------- 故事 ----------
+  function renderStory() {
+    const cur = S.rankSeen;
+    const spirits = Object.values(TIERS).map((t) =>
+      `<div class="cast-card"><img src="assets/spirits/${t.cls}.webp" alt="" onerror="this.remove()">` +
+      `<div><b style="color:var(--${t.cls})">${t.name}</b><p>${SPIRIT_DESC[t.cls] || ""}</p></div></div>`).join("");
+    const chapters = RANKS.map((r, i) => {
+      const st = i ? RANK_STORY[i] : PROLOGUE;
+      return i <= cur
+        ? `<button class="chap" data-st="${i}">${heroImg(i, "chap-img")}<span><b>${st.title}</b><small>${r[1]}．${st.scene}</small></span></button>`
+        : `<button class="chap" disabled><span class="road-lock">?</span><span><b>${st.title.split("．")[0]}．？？？</b><small>${r[1]}．戰力 ${r[0]} 解鎖</small></span></button>`;
+    }).join("");
+    $("#story-body").innerHTML =
+      `<div class="card story-intro">${heroImg(cur, "story-hero")}<div>` +
+      `<h2>墨池裂了</h2>` +
+      `<p>墨苑的千年墨池封著幾千隻字靈。白字老妖劃破封印，字靈四散，躲進字音林、字形山、字義海和大考神殿。</p>` +
+      `<p>你是墨苑的小書僮。收服字靈、累積戰力，就能一路從<b>書僮</b>考到<b>狀元</b>，把墨池重新封好。</p></div></div>` +
+      `<h2 class="sec">人物</h2><div class="cast">` +
+      `<div class="cast-card">${heroImg(cur, "")}<div><b>你（${RANKS[cur][1]}）</b><p>墨苑的小書僮。每升一級，衣冠就換一次，最後帽插宮花、跨馬遊街。</p></div></div>` +
+      CAST.map(([n, d]) => `<div class="cast-card"><span class="cast-ink">${n[0]}</span><div><b>${n}</b><p>${d}</p></div></div>`).join("") +
+      `</div><h2 class="sec">四種字靈</h2><div class="cast">${spirits}</div>` +
+      `<h2 class="sec">章節</h2><p class="muted small">戰力到了就會解鎖下一章；點已解鎖的章節可以重看。</p>` +
+      `<div class="chaps">${chapters}</div>`;
+    for (const b of document.querySelectorAll("#story-body [data-st]")) b.addEventListener("click", () => replayStory(+b.dataset.st));
   }
 
   // ---------- 戰績 ----------
