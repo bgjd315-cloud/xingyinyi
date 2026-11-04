@@ -258,3 +258,10 @@ u{text-decoration-thickness:2px; text-underline-offset:3px}
   .item button{grid-column:3}
 }
 .cast-card img{width:64px; height:84px}
+
+/* 2026-11 審查：手機點擊區、分頁列、注音不拆行 */
+#enc-quit{min-height:44px}
+.chk input[type=checkbox]{width:24px; height:24px; vertical-align:middle}
+.nw{white-space:nowrap}
+@media (max-width:420px){ .tabs button{font-size:.9rem; white-space:nowrap} }
+@media (max-width:360px){ .tabs button{font-size:.78rem; padding:.5em 0} }

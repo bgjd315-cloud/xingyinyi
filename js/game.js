@@ -148,7 +148,7 @@
       }
       return "";
     };
-    if (q.tier === "小題") g = pick(q.stem);
+    if (q.tier === "小題" || q.tier === "字卡") g = pick(q.stem);
     else g = pick(q.options.join("／")) || pick(q.stem);
     if (!g) g = { 字音: "音", 字形: "形", 字義: "義" }[q.kind];
     if (!ZY.test(g) && g.length > 2) g = g.slice(0, 2);
@@ -210,7 +210,7 @@
       ladderHTML(cur) +
       `<h3>${st.title}</h3><p class="scene">${st.scene}</p>` +
       st.story.map((t) => `<p>${t}</p>`).join("") +
-      `<div class="lore"><b>考場小知識．${st.note[0]}</b>${st.note[1]}</div>` +
+      `<div class="lore"><b>考場小知識．${st.note[0]}</b>${st.note[1].replace(/[ㄅ-ㄩˊˇˋ˙]+/g, (z) => `<span class="nw">${z}</span>`)}</div>` +
       (st.go ? `<p class="goto">下一站：${GROUNDS.find((g) => g.id === st.go).name}</p>` : "") +
       (giftLine ? `<p class="gift">${giftLine}</p>` : "") +
       `<button class="primary wide" id="m-close">${giftLine && !isPrologue ? "收下賀禮" : "繼續"}</button></div>`;
@@ -277,8 +277,10 @@
   for (const b of document.querySelectorAll(".tabs button")) {
     b.addEventListener("click", () => {
       if (run && !run.done && !confirm("正在出巡中，要離開嗎？這次出巡會結束。")) return;
-      if (run && !run.done) endRun(true);
+      const quit = run && !run.done;
+      if (quit) endRun(true);
       show(b.dataset.tab);
+      if (quit) checkRankUp();
     });
   }
 
@@ -616,7 +618,7 @@
     const box = $("#dex");
     box.innerHTML = "";
     const frag = document.createDocumentFragment();
-    const LIMIT = 600;
+    const LIMIT = dexLimit;
     for (const q of qs.slice(0, LIMIT)) {
       const got = S.got[q.id], es = S.esc[q.id];
       const b = document.createElement("button");
@@ -638,7 +640,13 @@
       const p = document.createElement("p");
       p.className = "muted small";
       p.style.gridColumn = "1 / -1";
-      p.textContent = `只列出前 ${LIMIT} 隻，用上方篩選縮小範圍。`;
+      p.textContent = `已列出 ${LIMIT}／${qs.length} 隻。`;
+      const more = document.createElement("button");
+      more.className = "ghost";
+      more.textContent = "顯示更多";
+      more.addEventListener("click", () => { dexLimit += 600; renderDex(); });
+      p.appendChild(document.createTextNode(" "));
+      p.appendChild(more);
       box.appendChild(p);
     }
   }
@@ -646,7 +654,8 @@
     if (EXAM(q)) return q.source.replace(" 大考改編題", "改編");
     return q.kind;
   }
-  for (const id of ["#d-kind", "#d-tier", "#d-show"]) $(id).addEventListener("change", renderDex);
+  let dexLimit = 600;
+  for (const id of ["#d-kind", "#d-tier", "#d-show"]) $(id).addEventListener("change", () => { dexLimit = 600; renderDex(); });
 
   // ---------- 商店 ----------
   function costOf(it) {
@@ -767,7 +776,7 @@
   }
 
   // ---------- 啟動 ----------
-  fetch("data/bank.json")
+  fetch("data/bank.json?v=20261104")
     .then((r) => r.json())
     .then((d) => {
       BANK = d.questions;
@@ -786,6 +795,7 @@
       if (!S.intro && S.runs > 0) { S.intro = true; S.rankSeen = rankOf(totalPower()).idx; save(); }
       show("hunt");
       if (!S.intro) showPrologue();
+      else checkRankUp();
     })
     .catch(() => { document.querySelector("main").innerHTML = '<div class="card">題庫載入失敗，請重新整理。</div>'; });
 })();
